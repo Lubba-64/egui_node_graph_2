@@ -122,7 +122,7 @@ where
         let cursor_pos = ui
             .ctx()
             .input(|i| i.pointer.hover_pos().unwrap_or(Pos2::ZERO));
-        let mut cursor_in_editor = resp.hovered();
+        let mut cursor_in_editor = resp.contains_pointer();
         let mut cursor_in_finder = false;
 
         // Gets filled with the node metrics as they are drawn
@@ -154,7 +154,7 @@ where
             click_on_background = true;
         } else if r.drag_started() {
             drag_started_on_background = true;
-        } else if r.drag_released() {
+        } else if r.drag_stopped() {
             drag_released_on_background = true;
         }
 
@@ -182,7 +182,7 @@ where
         /* Draw the node finder, if open */
         let mut should_close_node_finder = false;
         if let Some(ref mut node_finder) = self.node_finder {
-            let mut node_finder_area = Area::new("node_finder").order(Order::Foreground);
+            let mut node_finder_area = Area::new(Id::new("node_finder")).order(Order::Foreground);
             if let Some(pos) = node_finder.position {
                 node_finder_area = node_finder_area.current_pos(pos);
             }
@@ -408,7 +408,7 @@ where
             self.connection_in_progress = None;
         }
 
-        if mouse.secondary_released() && cursor_in_editor && !cursor_in_finder {
+        if mouse.secondary_clicked() && cursor_in_editor && !cursor_in_finder {
             self.node_finder = Some(NodeFinder::new_at(cursor_pos));
         }
         if ui.ctx().input(|i| i.key_pressed(Key::Escape)) {
@@ -804,6 +804,8 @@ where
                 Rect::from_min_size(outer_rect.min, vec2(outer_rect.width(), titlebar_height));
             let titlebar = Shape::Rect(RectShape {
                 rect: titlebar_rect,
+                fill_texture_id: TextureId::Managed(0),
+                uv: Rect::ZERO,
                 rounding,
                 fill: self.graph[self.node_id]
                     .user_data
@@ -818,7 +820,9 @@ where
             );
             let body = Shape::Rect(RectShape {
                 rect: body_rect,
-                rounding: Rounding::none(),
+                fill_texture_id: TextureId::Managed(0),
+                uv: Rect::ZERO,
+                rounding: Rounding::ZERO,
                 fill: background_color,
                 stroke: Stroke::NONE,
             });
@@ -830,6 +834,8 @@ where
             let bottom_body = Shape::Rect(RectShape {
                 rect: bottom_body_rect,
                 rounding,
+                fill_texture_id: TextureId::Managed(0),
+                uv: Rect::ZERO,
                 fill: background_color,
                 stroke: Stroke::NONE,
             });
@@ -839,6 +845,8 @@ where
                 Shape::Rect(RectShape {
                     rect: node_rect.expand(1.0),
                     rounding,
+                    fill_texture_id: TextureId::Managed(0),
+                    uv: Rect::ZERO,
                     fill: Color32::WHITE.lighten(0.8),
                     stroke: Stroke::NONE,
                 })

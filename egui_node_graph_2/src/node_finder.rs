@@ -40,7 +40,6 @@ where
     ) -> Option<NodeTemplate> {
         let background_color;
         let text_color;
-
         if ui.visuals().dark_mode {
             background_color = color_from_hex("#3f3f3f").unwrap();
             text_color = color_from_hex("#fefefe").unwrap();

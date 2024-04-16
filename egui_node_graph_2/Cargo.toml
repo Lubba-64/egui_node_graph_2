@@ -1,12 +1,12 @@
 [package]
-name = "egui_node_graph"
+name = "egui_node_graph_2"
 description = "A helper library to create interactive node graphs using egui"
-homepage = "https://github.com/setzer22/egui_node_graph"
-repository = "https://github.com/setzer22/egui_node_graph"
+homepage = "https://github.com/Lubba-64/egui_node_graph_2"
+repository = "https://github.com/Lubba-64/egui_node_graph_2"
 license = "MIT"
-version = "0.4.0"
+version = "0.4.1"
 keywords = ["ui", "egui", "graph", "node"]
-authors = ["setzer22"]
+authors = ["setzer22", "lubba64"]
 edition = "2021"
 readme = "../README.md"
 workspace = ".."
@@ -15,7 +15,7 @@ workspace = ".."
 persistence = ["serde", "slotmap/serde", "smallvec/serde", "egui/persistence"]
 
 [dependencies]
-egui = { version = "0.21.0" }
+egui = { version = "0.27.2" }
 slotmap = { version = "1.0" }
 smallvec = { version = "1.10.0" }
 serde = { version = "1.0", optional = true, features = ["derive"] }

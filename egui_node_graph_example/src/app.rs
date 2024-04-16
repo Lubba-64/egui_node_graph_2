@@ -1,7 +1,7 @@
 use std::{borrow::Cow, collections::HashMap};
 
 use eframe::egui::{self, DragValue, TextStyle};
-use egui_node_graph::*;
+use egui_node_graph_2::*;
 
 // ========= First, define your user data types =============
 
@@ -382,7 +382,7 @@ pub struct NodeGraphExample {
 }
 
 #[cfg(feature = "persistence")]
-const PERSISTENCE_KEY: &str = "egui_node_graph";
+const PERSISTENCE_KEY: &str = "egui_node_graph_2";
 
 #[cfg(feature = "persistence")]
 impl NodeGraphExample {
