@@ -1,4 +1,4 @@
-# Egui Node Graph Fork (WIP)
+# Egui Node Graph 2
 > There you have it! Now go build your next awesome node graph thing in Rust 🦀
 
 [![Latest version](https://img.shields.io/crates/v/egui_node_graph.svg)](https://crates.io/crates/egui_node_graph)
@@ -6,7 +6,7 @@
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
 
-**ARCHIVED REPOSITORY** This repository is now archived because of a variety of technical and political reasons that made me loose my motivation to continue contributing to the Rust community in my free time.
+original repo is archived, I will do my best to keep this projec tup to date with the latest versions of its dependant packages.
 
 ![Showcase image](showcase.png)
 
