@@ -6,7 +6,7 @@
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
 
-original repo is archived, I will do my best to keep this projec tup to date with the latest versions of its dependant packages.
+original repo is archived, I will do my best to keep this project up to date with the latest versions of its dependant packages.
 
 ![Showcase image](showcase.png)
 
