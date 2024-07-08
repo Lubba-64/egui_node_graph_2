@@ -486,6 +486,7 @@ where
             Rect::from_min_size(*self.position + self.pan, Self::MAX_NODE_SIZE.into()),
             Layout::default(),
             self.node_id,
+            None,
         );
 
         Self::show_graph_node(self, &mut child_ui, user_state)
@@ -525,7 +526,7 @@ where
         inner_rect.max.x = inner_rect.max.x.max(inner_rect.min.x);
         inner_rect.max.y = inner_rect.max.y.max(inner_rect.min.y);
 
-        let mut child_ui = ui.child_ui(inner_rect, *ui.layout());
+        let mut child_ui = ui.child_ui(inner_rect, *ui.layout(), None);
 
         // Get interaction rect from memory, it may expand after the window response on resize.
         let interaction_rect = ui
@@ -812,6 +813,7 @@ where
                     .titlebar_color(ui, self.node_id, self.graph, user_state)
                     .unwrap_or_else(|| background_color.lighten(0.8)),
                 stroke: Stroke::NONE,
+                blur_width: 0.0,
             });
 
             let body_rect = Rect::from_min_size(
@@ -825,6 +827,7 @@ where
                 rounding: Rounding::ZERO,
                 fill: background_color,
                 stroke: Stroke::NONE,
+                blur_width: 0.0,
             });
 
             let bottom_body_rect = Rect::from_min_size(
@@ -838,6 +841,7 @@ where
                 uv: Rect::ZERO,
                 fill: background_color,
                 stroke: Stroke::NONE,
+                blur_width: 0.0,
             });
 
             let node_rect = titlebar_rect.union(body_rect).union(bottom_body_rect);
@@ -849,6 +853,7 @@ where
                     uv: Rect::ZERO,
                     fill: Color32::WHITE.lighten(0.8),
                     stroke: Stroke::NONE,
+                    blur_width: 0.0,
                 })
             } else {
                 Shape::Noop
