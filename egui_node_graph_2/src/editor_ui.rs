@@ -380,6 +380,7 @@ where
                 2.0,
                 bg_color,
                 Stroke::new(3.0, stroke_color),
+                StrokeKind::Outside,
             );
 
             self.selected_nodes = node_rects
@@ -797,37 +798,41 @@ where
         // does not support drawing rectangles with asymmetrical round corners.
 
         let (shape, outline) = {
-            let rounding_radius = 4.0;
-            let rounding = Rounding::same(rounding_radius);
-
             let titlebar_height = title_height + margin.y;
             let titlebar_rect =
                 Rect::from_min_size(outer_rect.min, vec2(outer_rect.width(), titlebar_height));
             let titlebar = Shape::Rect(RectShape {
                 rect: titlebar_rect,
-                fill_texture_id: TextureId::Managed(0),
-                uv: Rect::ZERO,
-                rounding,
+                corner_radius: CornerRadius {
+                    nw: 4,
+                    ne: 4,
+                    sw: 4,
+                    se: 4,
+                },
+                brush: None,
                 fill: self.graph[self.node_id]
                     .user_data
                     .titlebar_color(ui, self.node_id, self.graph, user_state)
                     .unwrap_or_else(|| background_color.lighten(0.8)),
                 stroke: Stroke::NONE,
                 blur_width: 0.0,
+                stroke_kind: StrokeKind::Outside,
+                round_to_pixels: None,
             });
 
             let body_rect = Rect::from_min_size(
-                outer_rect.min + vec2(0.0, titlebar_height - rounding_radius),
+                outer_rect.min + vec2(0.0, titlebar_height - 4.0),
                 vec2(outer_rect.width(), outer_rect.height() - titlebar_height),
             );
             let body = Shape::Rect(RectShape {
                 rect: body_rect,
-                fill_texture_id: TextureId::Managed(0),
-                uv: Rect::ZERO,
-                rounding: Rounding::ZERO,
                 fill: background_color,
                 stroke: Stroke::NONE,
                 blur_width: 0.0,
+                stroke_kind: StrokeKind::Outside,
+                round_to_pixels: None,
+                corner_radius: CornerRadius::default(),
+                brush: None,
             });
 
             let bottom_body_rect = Rect::from_min_size(
@@ -836,21 +841,23 @@ where
             );
             let bottom_body = Shape::Rect(RectShape {
                 rect: bottom_body_rect,
-                rounding,
-                fill_texture_id: TextureId::Managed(0),
-                uv: Rect::ZERO,
                 fill: background_color,
                 stroke: Stroke::NONE,
                 blur_width: 0.0,
+                stroke_kind: StrokeKind::Outside,
+                round_to_pixels: None,
+                corner_radius: CornerRadius::same(4),
+                brush: None,
             });
 
             let node_rect = titlebar_rect.union(body_rect).union(bottom_body_rect);
             let outline = if self.selected {
                 Shape::Rect(RectShape {
                     rect: node_rect.expand(1.0),
-                    rounding,
-                    fill_texture_id: TextureId::Managed(0),
-                    uv: Rect::ZERO,
+                    stroke_kind: StrokeKind::Outside,
+                    round_to_pixels: None,
+                    corner_radius: CornerRadius::same(4),
+                    brush: None,
                     fill: Color32::WHITE.lighten(0.8),
                     stroke: Stroke::NONE,
                     blur_width: 0.0,
