@@ -553,12 +553,27 @@ where
         let mut output_port_heights = vec![];
 
         child_ui.vertical(|ui| {
-            let horizontal = ui.horizontal(|ui| {
-                ui.add(Label::new(
+            ui.horizontal(|ui| {
+                let label_hovered = ui.add(Label::new(
                     RichText::new(&self.graph[self.node_id].label)
                         .text_style(TextStyle::Button)
                         .color(text_color),
                 ));
+
+                match &self.graph[self.node_id].tooltip {
+                    Some(tooltip) => {
+                        if label_hovered.hovered() {
+                            show_tooltip_at_pointer(
+                                ui.ctx(),
+                                label_hovered.layer_id,
+                                Id::new(format!("{} toolitp", self.graph[self.node_id].label)),
+                                |ui| ui.label(tooltip),
+                            );
+                        }
+                    }
+                    None => {}
+                }
+
                 responses.extend(
                     self.graph[self.node_id]
                         .user_data
@@ -567,19 +582,7 @@ where
                 );
                 ui.add_space(8.0); // The size of the little cross icon
             });
-            match &self.graph[self.node_id].tooltip {
-                Some(tooltip) => {
-                    if horizontal.response.hovered() {
-                        show_tooltip_at_pointer(
-                            ui.ctx(),
-                            horizontal.response.layer_id,
-                            Id::new(format!("{} toolitp", self.graph[self.node_id].label)),
-                            |ui| ui.label(tooltip),
-                        );
-                    }
-                }
-                None => {}
-            }
+
             ui.add_space(margin.y);
             title_height = ui.min_size().y;
 

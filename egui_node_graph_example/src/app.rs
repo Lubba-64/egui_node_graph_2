@@ -160,7 +160,7 @@ impl NodeTemplateTrait for MyNodeTemplate {
     }
 
     fn tooltip(&self) -> Option<String> {
-        None
+        Some("Test tooltip".to_string())
     }
 
     fn user_data(&self, _user_state: &mut Self::UserState) -> Self::NodeData {

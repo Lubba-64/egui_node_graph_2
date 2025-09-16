@@ -118,16 +118,29 @@ where
                                                 for (kind, kind_name) in filtered_kinds {
                                                     let label =
                                                         ui.selectable_label(false, kind_name);
-                                                    if match kind.tooltip() {
-                                                        None => label.clicked(),
-                                                        Some(tooltip) => {
-                                                            label.on_hover_text(tooltip).clicked()
-                                                        }
-                                                    } {
+                                                    if label.clicked() {
                                                         submitted_archetype = Some(kind.clone());
                                                     } else if query_submit {
                                                         submitted_archetype = Some(kind.clone());
                                                         query_submit = false;
+                                                    }
+                                                    match &kind.tooltip() {
+                                                        Some(tooltip) => {
+                                                            if label.hovered() {
+                                                                show_tooltip_at_pointer(
+                                                                    ui.ctx(),
+                                                                    label.layer_id,
+                                                                    Id::new(format!(
+                                                                        "{} toolitp",
+                                                                        kind.node_graph_label(
+                                                                            user_state
+                                                                        )
+                                                                    )),
+                                                                    |ui| ui.label(tooltip),
+                                                                );
+                                                            }
+                                                        }
+                                                        None => {}
                                                     }
                                                 }
                                             });
