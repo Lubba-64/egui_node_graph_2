@@ -116,10 +116,14 @@ where
                                             .open(update_open.then_some(default_open))
                                             .show(ui, |ui| {
                                                 for (kind, kind_name) in filtered_kinds {
-                                                    if ui
-                                                        .selectable_label(false, kind_name)
-                                                        .clicked()
-                                                    {
+                                                    let label =
+                                                        ui.selectable_label(false, kind_name);
+                                                    if match kind.tooltip() {
+                                                        None => label.clicked(),
+                                                        Some(tooltip) => {
+                                                            label.on_hover_text(tooltip).clicked()
+                                                        }
+                                                    } {
                                                         submitted_archetype = Some(kind.clone());
                                                     } else if query_submit {
                                                         submitted_archetype = Some(kind.clone());

@@ -13,6 +13,7 @@ impl<NodeData, DataType, ValueType> Graph<NodeData, DataType, ValueType> {
     pub fn add_node(
         &mut self,
         label: String,
+        tooltip: Option<String>,
         user_data: NodeData,
         f: impl FnOnce(&mut Graph<NodeData, DataType, ValueType>, NodeId),
     ) -> NodeId {
@@ -24,6 +25,7 @@ impl<NodeData, DataType, ValueType> Graph<NodeData, DataType, ValueType> {
                 inputs: Vec::default(),
                 outputs: Vec::default(),
                 user_data,
+                tooltip,
             }
         });
 

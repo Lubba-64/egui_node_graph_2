@@ -159,6 +159,10 @@ impl NodeTemplateTrait for MyNodeTemplate {
         self.node_finder_label(user_state).into()
     }
 
+    fn tooltip(&self) -> Option<String> {
+        None
+    }
+
     fn user_data(&self, _user_state: &mut Self::UserState) -> Self::NodeData {
         MyNodeData { template: *self }
     }

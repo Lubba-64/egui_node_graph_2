@@ -262,6 +262,9 @@ pub trait NodeTemplateTrait: Clone {
         Vec::default()
     }
 
+    /// Tooltip for additional information on the node.
+    fn tooltip(&self) -> Option<String>;
+
     /// Returns a descriptive name for the node kind, used in the graph.
     fn node_graph_label(&self, user_state: &mut Self::UserState) -> String;
 

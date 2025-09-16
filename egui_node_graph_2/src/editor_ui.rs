@@ -190,6 +190,7 @@ where
                 if let Some(node_kind) = node_finder.show(ui, all_kinds, user_state) {
                     let new_node = self.graph.add_node(
                         node_kind.node_graph_label(user_state),
+                        node_kind.tooltip(),
                         node_kind.user_data(user_state),
                         |graph, node_id| node_kind.build_node(graph, user_state, node_id),
                     );
@@ -552,7 +553,7 @@ where
         let mut output_port_heights = vec![];
 
         child_ui.vertical(|ui| {
-            ui.horizontal(|ui| {
+            let horizontal = ui.horizontal(|ui| {
                 ui.add(Label::new(
                     RichText::new(&self.graph[self.node_id].label)
                         .text_style(TextStyle::Button)
@@ -566,6 +567,19 @@ where
                 );
                 ui.add_space(8.0); // The size of the little cross icon
             });
+            match &self.graph[self.node_id].tooltip {
+                Some(tooltip) => {
+                    if horizontal.response.hovered() {
+                        show_tooltip_at_pointer(
+                            ui.ctx(),
+                            horizontal.response.layer_id,
+                            Id::new(format!("{} toolitp", self.graph[self.node_id].label)),
+                            |ui| ui.label(tooltip),
+                        );
+                    }
+                }
+                None => {}
+            }
             ui.add_space(margin.y);
             title_height = ui.min_size().y;
 

@@ -11,6 +11,7 @@ use serde::{Deserialize, Serialize};
 pub struct Node<NodeData> {
     pub id: NodeId,
     pub label: String,
+    pub tooltip: Option<String>,
     pub inputs: Vec<(String, InputId)>,
     pub outputs: Vec<(String, OutputId)>,
     pub user_data: NodeData,
