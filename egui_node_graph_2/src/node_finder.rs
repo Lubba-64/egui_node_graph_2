@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, marker::PhantomData};
 
-use crate::{color_hex_utils::*, CategoryTrait, NodeTemplateIter, NodeTemplateTrait};
+use crate::{CategoryTrait, NodeTemplateIter, NodeTemplateTrait};
 
 use egui::*;
 
@@ -38,15 +38,9 @@ where
         all_kinds: impl NodeTemplateIter<Item = NodeTemplate>,
         user_state: &mut UserState,
     ) -> Option<NodeTemplate> {
-        let background_color;
-        let text_color;
-        if ui.visuals().dark_mode {
-            background_color = color_from_hex("#3f3f3f").unwrap();
-            text_color = color_from_hex("#fefefe").unwrap();
-        } else {
-            background_color = color_from_hex("#fefefe").unwrap();
-            text_color = color_from_hex("#3f3f3f").unwrap();
-        }
+        let visuals = ui.visuals();
+        let background_color = visuals.widgets.noninteractive.bg_fill;
+        let text_color = visuals.widgets.noninteractive.fg_stroke.color;
 
         ui.visuals_mut().widgets.noninteractive.fg_stroke = Stroke::new(2.0, text_color);
 
